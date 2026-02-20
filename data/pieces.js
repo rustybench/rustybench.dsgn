@@ -1,0 +1,17 @@
+export const pieces = [
+  { title: "Crippled Emotions",      file: "Crippled.webp",       col: 1 },
+  { title: "Hekate",                 file: "Hekate.webp",         col: 1 },
+  { title: "Kikagaku",               file: "KikagakuFramed.webp", col: 1 },
+  { title: "Suspended",              file: "SuspendedJPG.webp",   col: 1 },
+  { title: "Mystic Tension — Shirt", file: "tmtShirt.jpg",        col: 1 },
+  { title: "Ever Cosmic",            file: "EverCosmic.webp",     col: 2 },
+  { title: "Untitled I",             file: "IMG_0668.webp",       col: 2 },
+  { title: "Let It Be",              file: "LetitBe.webp",        col: 2 },
+  { title: "Threads",                file: "Threads.webp",        col: 2 },
+  { title: "Keep Grading",           file: "KeepGrading.jpg",     col: 2 },
+  { title: "Floating Head",          file: "Floater.webp",        col: 3 },
+  { title: "Untitled II",            file: "IMG_1039.webp",       col: 3 },
+  { title: "Primordial",             file: "Primo.webp",          col: 3 },
+  { title: "The Mystic Tension",     file: "tmtNewsprint.webp",   col: 3 },
+  { title: "Always Ace",             file: "AA.png",              col: 3 },
+];

@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Card from '../components/Card';
+import AboutModal from '../components/AboutModal';
 import { pieces } from '../data/pieces';
 
 const col1 = pieces.filter(p => p.col === 1);
@@ -10,6 +11,7 @@ const col3 = pieces.filter(p => p.col === 3);
 
 export default function Home() {
   const colRefs = [useRef(null), useRef(null), useRef(null)];
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   useEffect(() => {
     const cols = colRefs.map(r => r.current);
@@ -31,7 +33,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar onAboutClick={() => setIsAboutOpen(true)} />
       <div className="layout">
         <Sidebar />
         <main className="main">
@@ -48,6 +50,7 @@ export default function Home() {
           </div>
         </main>
       </div>
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
     </>
   );
 }

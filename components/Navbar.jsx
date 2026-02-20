@@ -1,19 +1,29 @@
 import { useEffect, useRef } from 'react';
 
-export default function Navbar() {
+export default function Navbar({ onAboutClick }) {
   const nameRef   = useRef(null);
   const cornerRef = useRef(null);
 
   useEffect(() => {
-    const name   = nameRef.current;
-    const corner = cornerRef.current;
-    if (!name || !corner) return;
-    let size = 20;
-    name.style.fontSize = size + 'px';
-    const padding = 16;
-    while (name.scrollWidth > corner.clientWidth - padding && size > 6) {
-      size -= 0.25;
+    const fitText = () => {
+      const name   = nameRef.current;
+      const corner = cornerRef.current;
+      if (!name || !corner) return;
+      let size = 20;
       name.style.fontSize = size + 'px';
+      const padding = 16;
+      while (name.scrollWidth > corner.clientWidth - padding && size > 6) {
+        size -= 0.25;
+        name.style.fontSize = size + 'px';
+      }
+    };
+
+    // Wait for fonts to load before fitting
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitText);
+    } else {
+      // Fallback: wait a bit then fit
+      setTimeout(fitText, 100);
     }
   }, []);
 
@@ -25,7 +35,7 @@ export default function Navbar() {
 
       <div className="navbar-links">
         <a href="#" className="active">Work</a>
-        <a href="#">About</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); onAboutClick?.(); }}>About</a>
         <a href="#">Contact</a>
       </div>
 

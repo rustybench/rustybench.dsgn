@@ -7,10 +7,10 @@ export const pieces = [
   { title: "Untitled II",            file: "IMG_1039.webp",       col: 1 },
 
   // Middle Column (col: 2) - 6.91 units (shortest)
-  { title: "Let It Be",              file: "LetitBe.webp",        col: 2 },
-  { title: "Hekate",                 file: "Hekate.webp",         col: 2 },
-  { title: "The Mystic Tension",     file: "tmtNewsprint.webp",   col: 2 },
   { title: "Ever Cosmic",            file: "EverCosmic.webp",     col: 2 },
+  { title: "Hekate",                 file: "Hekate.webp",         col: 2 },
+  { title: "Let It Be",              file: "LetitBe.webp",        col: 2 },
+  { title: "The Mystic Tension",     file: "tmtNewsprint.webp",   col: 2 },
   { title: "Primordial",             file: "Primo.webp",          col: 2 },
 
   // Right Column (col: 3) - 7.26 units

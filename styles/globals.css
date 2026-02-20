@@ -9,8 +9,8 @@
   --gold:         #b8965a;
   --gold-dim:     rgba(184, 150, 90, 0.28);
   --text:         #d4c5a9;
-  --text-dim:     rgba(212, 197, 169, 0.38);
-  --text-muted:   rgba(212, 197, 169, 0.18);
+  --text-dim:     rgba(212, 197, 169, 0.5);
+  --text-muted:   rgba(212, 197, 169, 0.25);
   --nav-h:        44px;
   --side-w:       108px;
   --gap:          7px;
@@ -33,6 +33,8 @@ body::before {
   z-index: 999;
   opacity: 0.55;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 /* ── SCROLLBAR ── */
@@ -102,6 +104,13 @@ body::before {
 .navbar-copy {
   font-size: 8px; color: var(--text-muted);
   letter-spacing: 0.1em; font-style: italic; padding: 0 14px; opacity: 0.5;
+}
+
+/* ── FOCUS STYLES ── */
+.navbar-links a:focus-visible,
+.navbar-right a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 /* ── LAYOUT ── */
@@ -209,6 +218,11 @@ body::before {
 }
 .item.flipped .return-hint { opacity: 1; }
 .item.flipped .flip-hint  { opacity: 0; }
+
+.item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {

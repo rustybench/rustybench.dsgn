@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Card from '../components/Card';
 import AboutModal from '../components/AboutModal';
+import CardStackViewer from '../components/gallery/CardStackViewer';
+import Footer from '../components/Footer';
 import { pieces } from '../data/pieces';
 
 const col1 = pieces.filter(p => p.col === 1);
@@ -39,15 +41,27 @@ export default function Home() {
         <main className="main">
           <div className="masonry">
             <div className="col" ref={colRefs[0]}>
-              {col1.map(p => <Card key={p.file} title={p.title} file={p.file} />)}
+              {col1.map((p, index) => (
+                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
+              ))}
             </div>
             <div className="col" ref={colRefs[1]}>
-              {col2.map(p => <Card key={p.file} title={p.title} file={p.file} />)}
+              {col2.map((p, index) => (
+                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
+              ))}
             </div>
             <div className="col" ref={colRefs[2]}>
-              {col3.map(p => <Card key={p.file} title={p.title} file={p.file} />)}
+              {col3.map((p, index) => (
+                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
+              ))}
             </div>
           </div>
+
+          {/* Card Stack Gallery - appears below masonry grid */}
+          <CardStackViewer />
+
+          {/* Footer - completes the portfolio */}
+          <Footer />
         </main>
       </div>
       <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />

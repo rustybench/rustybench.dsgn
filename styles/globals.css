@@ -412,8 +412,8 @@ body::before {
 }
 
 .stack-card.spread:hover .stack-card-inner {
-  border-color: rgba(184, 150, 90, 0.9);
-  border-width: 2px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4),
+              0 0 0 2px rgba(184, 150, 90, 0.9);
 }
 
 .stack-card-inner img {

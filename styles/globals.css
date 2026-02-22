@@ -14,6 +14,10 @@
   --nav-h:        44px;
   --side-w:       108px;
   --gap:          7px;
+
+  /* Card Stack Gallery */
+  --card-w:       150px;
+  --card-h:       200px;
 }
 
 html, body {
@@ -337,4 +341,532 @@ body::before {
 @media (max-width: 640px) {
   .masonry { grid-template-columns: 1fr; }
   .sidebar { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CARD STACK GALLERY VIEWER
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── SCENE CONTAINER ── */
+.card-stack-scene {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 80px 20px;
+}
+
+.stack-container {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain: layout style paint;
+}
+
+/* ── CARD STACK ── */
+.card-stack {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  cursor: pointer;
+  contain: layout style;
+}
+
+.card-stack.spread {
+  cursor: default;
+  width: 100%;
+}
+
+/* ── INDIVIDUAL STACK CARD ── */
+.stack-card {
+  position: absolute;
+  width: var(--card-w);
+  height: var(--card-h);
+  top: 50%;
+  left: 50%;
+  margin-left: calc(var(--card-w) / -2);
+  margin-top: calc(var(--card-h) / -2);
+  transition: transform 0.3s ease-out;
+  contain: layout style paint;
+}
+
+.stack-card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  contain: layout style paint;
+}
+
+.stack-card.spread .stack-card-inner {
+  cursor: pointer;
+}
+
+.stack-card.spread:hover .stack-card-inner {
+  border-color: rgba(184, 150, 90, 0.9);
+  border-width: 2px;
+}
+
+.stack-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── CARD LABEL ── */
+.stack-card-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 8px 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stack-card.spread .stack-card-label {
+  opacity: 1;
+}
+
+.stack-card-label span {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  display: block;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════ */
+
+.footer {
+  margin-top: 0;
+  padding: 25px var(--gap) 40px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  max-width: 100%;
+}
+
+/* Left Column: Year */
+.footer-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.footer-year {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Center Column: Ornamental Divider */
+.footer-center {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.footer-divider {
+  display: block;
+  width: 1px;
+  height: 25px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
+  opacity: 0.6;
+}
+
+/* Right Column: Copyright */
+.footer-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-copyright {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Responsive: Mobile */
+@media (max-width: 640px) {
+  .footer {
+    margin-top: 0;
+    padding: 20px 20px 30px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-right {
+    justify-content: center;
+  }
+
+  .footer-center {
+    padding: 0;
+  }
+
+  .footer-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--gold-dim),
+      transparent
+    );
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL TO TOP BUTTON
+   ══════════════════════════════════════════════════════════════ */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 35px;
+  right: 60px;
+  width: 40px;
+  height: 40px;
+  background: rgba(14, 12, 10, 0.85);
+  border: 1px solid var(--gold-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s, visibility 0.3s, border-color 0.3s, background 0.3s, transform 0.3s;
+  z-index: 10000;
+}
+
+.scroll-to-top.visible {
+  opacity: 0.8;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.scroll-to-top:hover {
+  opacity: 1;
+  border-color: var(--gold);
+  background: rgba(184, 150, 90, 0.05);
+  transform: translateY(-2px);
+}
+
+.scroll-to-top:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.scroll-arrow {
+  font-size: 18px;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+.scroll-to-top:hover .scroll-arrow {
+  color: var(--gold);
+}
+
+@media (max-width: 640px) {
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .scroll-arrow {
+    font-size: 16px;
+  }
+}
+
+/* ── CENTER CLOSE BUTTON ── */
+.circle-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(14, 12, 10, 0.85);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease;
+  z-index: 200;
+  animation: centerAppear 0.3s ease-out 0.15s backwards;
+  contain: layout style paint;
+}
+
+.circle-center:hover {
+  border-color: var(--gold);
+}
+
+.center-icon {
+  font-size: 32px;
+  color: var(--text-dim);
+  font-weight: 300;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.circle-center:hover .center-icon {
+  color: var(--gold);
+}
+
+@keyframes centerAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ── FULLSCREEN VIEWER ── */
+.fs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fsAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fsAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fs-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.96);
+  z-index: 1;
+}
+
+.fs-content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1400px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  animation: fsSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fsSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── FULLSCREEN HEADER ── */
+.fs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.fs-title {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--text);
+}
+
+.fs-counter {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+}
+
+/* ── FULLSCREEN IMAGE ── */
+.fs-image-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+.fs-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ── NAVIGATION BUTTONS ── */
+.fs-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(14, 12, 10, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.fs-nav:hover {
+  background: rgba(14, 12, 10, 0.95);
+  border-color: var(--gold-dim);
+  color: var(--gold);
+}
+
+.fs-prev {
+  left: 20px;
+}
+
+.fs-next {
+  right: 20px;
+}
+
+/* ── CLOSE BUTTON ── */
+.fs-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(14, 12, 10, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.fs-close:hover {
+  background: rgba(14, 12, 10, 0.95);
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  transform: rotate(90deg);
+}
+
+/* ── THUMBNAIL STRIP ── */
+.fs-strip {
+  display: flex;
+  gap: 8px;
+  padding: 20px 0 0 0;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.fs-strip::-webkit-scrollbar {
+  height: 3px;
+}
+
+.fs-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fs-strip::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.fs-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 36px;
+  height: 48px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+
+.fs-thumb:hover {
+  opacity: 0.8;
+  border-color: var(--gold-dim);
+}
+
+.fs-thumb.active {
+  opacity: 1;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
 }

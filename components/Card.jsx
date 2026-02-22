@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const TILT_MAX = 10;
 
-export default function Card({ title, file }) {
+export default function Card({ title, file, isPriority = false }) {
   const itemRef  = useRef(null);
   const frontRef = useRef(null);
   const backRef  = useRef(null);
@@ -92,11 +93,28 @@ export default function Card({ title, file }) {
   return (
     <div className="item" ref={itemRef}>
       <div className="card-front" ref={frontRef}>
-        <img src={src} alt={title} loading="lazy" />
+        <Image
+          src={src}
+          alt={title}
+          width={1000}
+          height={1200}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{ width: '100%', height: 'auto' }}
+          priority={isPriority}
+        />
         <span className="flip-hint">flip</span>
       </div>
       <div className="card-back" ref={backRef}>
-        <img className="back-blur" src={src} alt="" aria-hidden="true" />
+        <Image
+          className="back-blur"
+          src={src}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{ objectFit: 'cover' }}
+          loading="lazy"
+          aria-hidden="true"
+        />
         <div className="future-overlay">
           <div className="fo-rule" />
           <span className="fo-text">future mock-up</span>

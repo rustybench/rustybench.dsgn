@@ -14,6 +14,8 @@ const col3 = pieces.filter(p => p.col === 3);
 export default function Home() {
   const colRefs = [useRef(null), useRef(null), useRef(null)];
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [showCardStack, setShowCardStack] = useState(false);
+  const stackPlaceholderRef = useRef(null);
 
   useEffect(() => {
     const cols = colRefs.map(r => r.current);
@@ -31,6 +33,28 @@ export default function Home() {
         }, delay * 1000);
       });
     });
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowCardStack(true);
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    const placeholder = stackPlaceholderRef.current;
+    if (placeholder) {
+      observer.observe(placeholder);
+    }
+
+    return () => {
+      if (placeholder) {
+        observer.unobserve(placeholder);
+      }
+    };
   }, []);
 
   return (
@@ -58,7 +82,15 @@ export default function Home() {
           </div>
 
           {/* Card Stack Gallery - appears below masonry grid */}
-          <CardStackViewer />
+          {showCardStack ? (
+            <CardStackViewer />
+          ) : (
+            <div
+              ref={stackPlaceholderRef}
+              className="card-stack-placeholder"
+              style={{ minHeight: '100vh' }}
+            />
+          )}
 
           {/* Footer - completes the portfolio */}
           <Footer />

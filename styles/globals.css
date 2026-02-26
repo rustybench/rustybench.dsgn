@@ -16,8 +16,8 @@
   --gap:          7px;
 
   /* Card Stack Gallery */
-  --card-w:       150px;
-  --card-h:       200px;
+  --card-w:       225px;
+  --card-h:       300px;
 }
 
 html, body {
@@ -183,9 +183,9 @@ body::before {
 .card-front img { display: block; width: 100%; height: auto; }
 .card-back {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: #090806;
-  display: flex; align-items: center; justify-content: center;
+  /* background removed - unified design uses background-image */
 }
+/* .back-blur and .future-overlay styles commented out - unified back design implementation
 .back-blur {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover;
@@ -203,6 +203,7 @@ body::before {
   font-size: 12px; letter-spacing: 0.18em;
   color: rgba(212, 197, 169, 0.65);
 }
+*/
 .flip-hint {
   position: absolute; bottom: 8px; right: 8px;
   font-family: 'IM Fell English', serif; font-style: italic;
@@ -359,12 +360,12 @@ body::before {
 
 .stack-container {
   position: relative;
-  width: 700px;
-  height: 700px;
+  width: 1000px;
+  height: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
-  contain: layout style paint;
+  overflow: visible;
 }
 
 /* ── CARD STACK ── */
@@ -381,6 +382,39 @@ body::before {
   width: 100%;
 }
 
+/* Orbital circle around all spread cards */
+.card-stack.spread::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1050px;
+  height: 1050px;
+  border: 1px solid rgba(184, 150, 90, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: orbitalAppear 0.4s ease-out;
+}
+
+@keyframes orbitalAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Allow pseudo-elements to render outside card bounds when spread */
+.stack-card.spread {
+  contain: none;
+  overflow: visible;
+}
+
 /* ── INDIVIDUAL STACK CARD ── */
 .stack-card {
   position: absolute;
@@ -390,7 +424,7 @@ body::before {
   left: 50%;
   margin-left: calc(var(--card-w) / -2);
   margin-top: calc(var(--card-h) / -2);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.2s ease-out;
   contain: layout style paint;
   will-change: transform;
 }
@@ -414,6 +448,65 @@ body::before {
 .stack-card.spread:hover .stack-card-inner {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4),
               0 0 0 2px rgba(184, 150, 90, 0.9);
+}
+
+/* Circular outline on hover */
+.stack-card.spread:hover::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(max(var(--card-w), var(--card-h)) + 50px);
+  height: calc(max(var(--card-w), var(--card-h)) + 50px);
+  border: 1px solid rgba(184, 150, 90, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: circleExpand 0.3s ease-out;
+}
+
+@keyframes circleExpand {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Vertical ray effect on hover */
+.stack-card.spread:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 150px;
+  background: linear-gradient(
+    to top,
+    rgba(184, 150, 90, 0.9),
+    rgba(184, 150, 90, 0.5) 40%,
+    rgba(184, 150, 90, 0.2) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 10;
+  animation: rayAppear 0.25s ease-out;
+}
+
+@keyframes rayAppear {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 150px;
+  }
 }
 
 .stack-card-inner img {
@@ -563,7 +656,7 @@ body::before {
 
 .scroll-to-top {
   position: fixed;
-  bottom: 35px;
+  bottom: 100px;
   right: 60px;
   width: 40px;
   height: 40px;
@@ -611,7 +704,7 @@ body::before {
 
 @media (max-width: 640px) {
   .scroll-to-top {
-    bottom: 20px;
+    bottom: 80px;
     right: 20px;
     width: 36px;
     height: 36px;
@@ -622,14 +715,86 @@ body::before {
   }
 }
 
+/* Ripple wave effect when scroll-to-top is clicked */
+.scroll-ripple {
+  position: fixed;
+  bottom: 100px;
+  right: 60px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 9999;
+  animation: rippleWave 1.2s ease-out forwards;
+}
+
+@keyframes rippleWave {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    border-width: 1.5px;
+  }
+  50% {
+    opacity: 0.6;
+    border-width: 1px;
+  }
+  100% {
+    transform: scale(60);
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+/* Gallery wave effect triggered by scroll-to-top */
+.gallery-wave .item {
+  animation: galleryTilt 1.2s ease-out;
+}
+
+.gallery-wave .item:nth-child(1) { animation-delay: 0.05s; }
+.gallery-wave .item:nth-child(2) { animation-delay: 0.1s; }
+.gallery-wave .item:nth-child(3) { animation-delay: 0.15s; }
+.gallery-wave .item:nth-child(4) { animation-delay: 0.2s; }
+.gallery-wave .item:nth-child(5) { animation-delay: 0.25s; }
+.gallery-wave .item:nth-child(6) { animation-delay: 0.3s; }
+.gallery-wave .item:nth-child(7) { animation-delay: 0.35s; }
+.gallery-wave .item:nth-child(8) { animation-delay: 0.4s; }
+.gallery-wave .item:nth-child(9) { animation-delay: 0.45s; }
+
+@keyframes galleryTilt {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-1deg) translateY(-3px);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(-1deg) rotateY(1deg) translateY(-2px);
+  }
+  75% {
+    transform: perspective(1000px) rotateX(1deg) rotateY(-0.5deg) translateY(-1px);
+  }
+}
+
+@media (max-width: 640px) {
+  .scroll-ripple {
+    bottom: 80px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
 /* ── CENTER CLOSE BUTTON ── */
 .circle-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: rgba(14, 12, 10, 0.85);
   border: 1px solid var(--border);
@@ -648,7 +813,7 @@ body::before {
 }
 
 .center-icon {
-  font-size: 32px;
+  font-size: 48px;
   color: var(--text-dim);
   font-weight: 300;
   line-height: 1;

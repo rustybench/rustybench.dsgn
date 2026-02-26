@@ -97,7 +97,7 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
 
   const backStyle = useMemo(() => ({
     backgroundImage: `url(/images/backside/${backImage}.webp)`,
-    backgroundSize: 'cover',
+    backgroundSize: '100% auto',
     backgroundPosition: `center ${backgroundPositionY}%`,
     backgroundRepeat: 'no-repeat'
   }), [backImage, backgroundPositionY]);

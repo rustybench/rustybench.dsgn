@@ -57,6 +57,12 @@ export default function Home() {
     };
   }, []);
 
+  // Calculate global positions for unified back design
+  const allPieces = [...col1, ...col2, ...col3];
+  const getCardPosition = (file) => {
+    return allPieces.findIndex(p => p.file === file);
+  };
+
   return (
     <>
       <Navbar onAboutClick={() => setIsAboutOpen(true)} />
@@ -65,19 +71,52 @@ export default function Home() {
         <main className="main">
           <div className="masonry">
             <div className="col" ref={colRefs[0]}>
-              {col1.map((p, index) => (
-                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
-              ))}
+              {col1.map((p, index) => {
+                const globalIndex = getCardPosition(p.file);
+                const backImage = globalIndex < 8 ? '01' : '02';
+                return (
+                  <Card
+                    key={p.file}
+                    title={p.title}
+                    file={p.file}
+                    isPriority={index < 2}
+                    cardIndex={globalIndex}
+                    backImage={backImage}
+                  />
+                );
+              })}
             </div>
             <div className="col" ref={colRefs[1]}>
-              {col2.map((p, index) => (
-                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
-              ))}
+              {col2.map((p, index) => {
+                const globalIndex = getCardPosition(p.file);
+                const backImage = globalIndex < 8 ? '01' : '02';
+                return (
+                  <Card
+                    key={p.file}
+                    title={p.title}
+                    file={p.file}
+                    isPriority={index < 2}
+                    cardIndex={globalIndex}
+                    backImage={backImage}
+                  />
+                );
+              })}
             </div>
             <div className="col" ref={colRefs[2]}>
-              {col3.map((p, index) => (
-                <Card key={p.file} title={p.title} file={p.file} isPriority={index < 2} />
-              ))}
+              {col3.map((p, index) => {
+                const globalIndex = getCardPosition(p.file);
+                const backImage = globalIndex < 8 ? '01' : '02';
+                return (
+                  <Card
+                    key={p.file}
+                    title={p.title}
+                    file={p.file}
+                    isPriority={index < 2}
+                    cardIndex={globalIndex}
+                    backImage={backImage}
+                  />
+                );
+              })}
             </div>
           </div>
 

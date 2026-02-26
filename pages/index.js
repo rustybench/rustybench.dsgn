@@ -58,10 +58,13 @@ export default function Home() {
   }, []);
 
   // Calculate global positions for unified back design
+  // NOTE: Card.jsx will be updated in Task 2 to consume cardIndex and backImage props
   const allPieces = [...col1, ...col2, ...col3];
-  const getCardPosition = (file) => {
-    return allPieces.findIndex(p => p.file === file);
-  };
+  const positionMap = new Map(allPieces.map((p, index) => [p.file, index]));
+  const getCardPosition = (file) => positionMap.get(file) ?? -1;
+
+  // Back design threshold: upper 8 cards use 01.webp, lower 7 use 02.webp
+  const BACK_IMAGE_THRESHOLD = 8;
 
   return (
     <>
@@ -73,7 +76,7 @@ export default function Home() {
             <div className="col" ref={colRefs[0]}>
               {col1.map((p, index) => {
                 const globalIndex = getCardPosition(p.file);
-                const backImage = globalIndex < 8 ? '01' : '02';
+                const backImage = globalIndex < BACK_IMAGE_THRESHOLD ? '01' : '02';
                 return (
                   <Card
                     key={p.file}
@@ -89,7 +92,7 @@ export default function Home() {
             <div className="col" ref={colRefs[1]}>
               {col2.map((p, index) => {
                 const globalIndex = getCardPosition(p.file);
-                const backImage = globalIndex < 8 ? '01' : '02';
+                const backImage = globalIndex < BACK_IMAGE_THRESHOLD ? '01' : '02';
                 return (
                   <Card
                     key={p.file}
@@ -105,7 +108,7 @@ export default function Home() {
             <div className="col" ref={colRefs[2]}>
               {col3.map((p, index) => {
                 const globalIndex = getCardPosition(p.file);
-                const backImage = globalIndex < 8 ? '01' : '02';
+                const backImage = globalIndex < BACK_IMAGE_THRESHOLD ? '01' : '02';
                 return (
                   <Card
                     key={p.file}

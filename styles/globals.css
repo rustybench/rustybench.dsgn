@@ -218,7 +218,8 @@ body::before {
   position: absolute; bottom: 8px; right: 8px;
   font-family: 'IM Fell English', serif; font-style: italic;
   font-size: 8px; letter-spacing: 0.12em;
-  color: rgba(212, 197, 169, 0.4);
+  color: rgba(212, 197, 169, 0.65);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.6);
   opacity: 0; transition: opacity 0.25s 0.1s;
   pointer-events: none; z-index: 2;
 }

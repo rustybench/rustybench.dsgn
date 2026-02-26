@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 
 const TILT_MAX = 10;
@@ -90,17 +90,17 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
 
   // Calculate background position for unified back design
   const groupSize = backImage === '01' ? 8 : 7;
-  const indexInGroup = backImage === '01' ? cardIndex : cardIndex - 8;
+  const indexInGroup = backImage === '01' ? cardIndex : Math.max(0, cardIndex - 8);
   const backgroundPositionY = groupSize > 1
     ? (indexInGroup / (groupSize - 1)) * 100
     : 50;
 
-  const backStyle = {
+  const backStyle = useMemo(() => ({
     backgroundImage: `url(/images/backside/${backImage}.webp)`,
     backgroundSize: 'cover',
     backgroundPosition: `center ${backgroundPositionY}%`,
     backgroundRepeat: 'no-repeat'
-  };
+  }), [backImage, backgroundPositionY]);
 
   const src = `/images/${file}`;
 

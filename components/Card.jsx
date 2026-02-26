@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const TILT_MAX = 10;
 
-export default function Card({ title, file, isPriority = false }) {
+export default function Card({ title, file, isPriority = false, cardIndex = 0, backImage = '01' }) {
   const itemRef  = useRef(null);
   const frontRef = useRef(null);
   const backRef  = useRef(null);
@@ -88,6 +88,20 @@ export default function Card({ title, file, isPriority = false }) {
     };
   }, []);
 
+  // Calculate background position for unified back design
+  const groupSize = backImage === '01' ? 8 : 7;
+  const indexInGroup = backImage === '01' ? cardIndex : cardIndex - 8;
+  const backgroundPositionY = groupSize > 1
+    ? (indexInGroup / (groupSize - 1)) * 100
+    : 50;
+
+  const backStyle = {
+    backgroundImage: `url(/images/backside/${backImage}.webp)`,
+    backgroundSize: 'cover',
+    backgroundPosition: `center ${backgroundPositionY}%`,
+    backgroundRepeat: 'no-repeat'
+  };
+
   const src = `/images/${file}`;
 
   return (
@@ -104,22 +118,7 @@ export default function Card({ title, file, isPriority = false }) {
         />
         <span className="flip-hint">flip</span>
       </div>
-      <div className="card-back" ref={backRef}>
-        <Image
-          className="back-blur"
-          src={src}
-          alt=""
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          style={{ objectFit: 'cover' }}
-          loading="lazy"
-          aria-hidden="true"
-        />
-        <div className="future-overlay">
-          <div className="fo-rule" />
-          <span className="fo-text">future mock-up</span>
-          <div className="fo-rule" />
-        </div>
+      <div className="card-back" ref={backRef} style={backStyle}>
         <span className="return-hint">close</span>
       </div>
     </div>

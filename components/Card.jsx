@@ -1,12 +1,15 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useMemo, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
+import ColorPalette from './ColorPalette';
 
 const TILT_MAX = 10;
 
-export default function Card({ title, file, isPriority = false, cardIndex = 0, backImage = '01' }) {
+const Card = forwardRef(function Card({ title, file, isPriority = false, cardIndex = 0, backImage = '01', palette = null }, ref) {
   const itemRef  = useRef(null);
   const frontRef = useRef(null);
   const backRef  = useRef(null);
+  const flipFnRef = useRef(null);
+  const flippedRef = useRef(false); // Track flipped state for imperative access
 
   useEffect(() => {
     const card  = itemRef.current;
@@ -14,7 +17,7 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
     const back  = backRef.current;
     if (!card || !front || !back) return;
 
-    let flipped  = false;
+    let flipped  = flippedRef.current; // Initialize from shared ref
     let raf      = null;
     let cx = 0, cy = 0, tx = 0, ty = 0, hovering = false;
     const lerp = (a, b, t) => a + (b - a) * t;
@@ -63,16 +66,23 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
       if (!raf) raf = requestAnimationFrame(tick);
     }
 
-    function onClick() {
+    function onClick(e) {
+      // Don't flip if clicking on color palette
+      if (e && e.target && e.target.closest('.color-palette')) return;
+
       tx = 0; ty = 0; cx = 0; cy = 0;
       hovering = false;
       if (raf) { cancelAnimationFrame(raf); raf = null; }
       flipped = !flipped;
+      flippedRef.current = flipped; // Update shared ref
       card.classList.toggle('flipped', flipped);
       card.style.transition = 'transform 0.75s cubic-bezier(0.4,0.2,0.2,1)';
       setTransform();
       setTimeout(() => { card.style.transition = 'transform 0s'; }, 780);
     }
+
+    // Store flip function for imperative access
+    flipFnRef.current = onClick;
 
     card.addEventListener('mouseenter', onEnter);
     card.addEventListener('mousemove',  onMove);
@@ -88,19 +98,19 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
     };
   }, []);
 
-  // Calculate background position for unified back design
-  const groupSize = backImage === '01' ? 8 : 7;
-  const indexInGroup = backImage === '01' ? cardIndex : Math.max(0, cardIndex - 8);
-  const backgroundPositionY = groupSize > 1
-    ? (indexInGroup / (groupSize - 1)) * 100
-    : 50;
+  // Expose flipTo method and DOM element to parent via ref
+  useImperativeHandle(ref, () => ({
+    flipTo: (targetState) => {
+      if (!itemRef.current) return;
 
-  const backStyle = useMemo(() => ({
-    backgroundImage: `url(/images/backside/${backImage}.webp)`,
-    backgroundSize: '100% auto',
-    backgroundPosition: `center ${backgroundPositionY}%`,
-    backgroundRepeat: 'no-repeat'
-  }), [backImage, backgroundPositionY]);
+      const shouldBeFlipped = targetState === 'back';
+      // Only flip if changing to a different state
+      if (flippedRef.current !== shouldBeFlipped && flipFnRef.current) {
+        flipFnRef.current(); // Trigger the flip animation
+      }
+    },
+    getElement: () => itemRef.current
+  }));
 
   const src = `/images/${file}`;
 
@@ -118,9 +128,12 @@ export default function Card({ title, file, isPriority = false, cardIndex = 0, b
         />
         <span className="flip-hint">flip</span>
       </div>
-      <div className="card-back" ref={backRef} style={backStyle}>
+      <div className="card-back" ref={backRef}>
+        {palette && <ColorPalette colors={palette} />}
         <span className="return-hint">close</span>
       </div>
     </div>
   );
-}
+});
+
+export default Card;

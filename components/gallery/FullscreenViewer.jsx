@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Image from 'next/image';
 
 export default function FullscreenViewer({
   images,
@@ -7,7 +6,6 @@ export default function FullscreenViewer({
   onClose,
   onNext,
   onPrev,
-  onSelect,
 }) {
   // Keyboard navigation
   useEffect(() => {
@@ -37,14 +35,10 @@ export default function FullscreenViewer({
 
         {/* Main image */}
         <div className="fs-image-container">
-          <Image
+          <img
             src={currentImage.src}
             alt={currentImage.title}
             className="fs-image"
-            fill
-            sizes="100vw"
-            loading="lazy"
-            style={{ objectFit: 'contain' }}
           />
         </div>
 
@@ -92,27 +86,6 @@ export default function FullscreenViewer({
             />
           </svg>
         </button>
-
-        {/* Thumbnail strip */}
-        <div className="fs-strip">
-          {images.map((img, index) => (
-            <button
-              key={img.id}
-              className={`fs-thumb ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => onSelect(index)}
-              aria-label={`View ${img.title}`}
-            >
-              <Image
-                src={img.src}
-                alt={img.title}
-                fill
-                sizes="120px"
-                loading="lazy"
-                style={{ objectFit: 'cover' }}
-              />
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   );

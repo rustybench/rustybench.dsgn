@@ -16,6 +16,19 @@ export default function Home() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [showCardStack, setShowCardStack] = useState(false);
   const stackPlaceholderRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [showingBacks, setShowingBacks] = useState(false); // Track global flip-all state
+
+  const handleFlipAll = () => {
+    const targetState = showingBacks ? 'front' : 'back';
+
+    // Flip all cards synchronously in a single frame
+    cardRefs.current.forEach(ref => {
+      if (ref) ref.flipTo(targetState);
+    });
+
+    setShowingBacks(!showingBacks);
+  };
 
   useEffect(() => {
     const cols = colRefs.map(r => r.current);
@@ -70,7 +83,7 @@ export default function Home() {
     <>
       <Navbar onAboutClick={() => setIsAboutOpen(true)} />
       <div className="layout">
-        <Sidebar />
+        <Sidebar onFlipAll={handleFlipAll} />
         <main className="main">
           <div className="masonry">
             <div className="col" ref={colRefs[0]}>
@@ -80,11 +93,13 @@ export default function Home() {
                 return (
                   <Card
                     key={p.file}
+                    ref={(el) => cardRefs.current[globalIndex] = el}
                     title={p.title}
                     file={p.file}
                     isPriority={index < 2}
                     cardIndex={globalIndex}
                     backImage={backImage}
+                    palette={p.palette}
                   />
                 );
               })}
@@ -96,11 +111,13 @@ export default function Home() {
                 return (
                   <Card
                     key={p.file}
+                    ref={(el) => cardRefs.current[globalIndex] = el}
                     title={p.title}
                     file={p.file}
                     isPriority={index < 2}
                     cardIndex={globalIndex}
                     backImage={backImage}
+                    palette={p.palette}
                   />
                 );
               })}
@@ -112,11 +129,13 @@ export default function Home() {
                 return (
                   <Card
                     key={p.file}
+                    ref={(el) => cardRefs.current[globalIndex] = el}
                     title={p.title}
                     file={p.file}
                     isPriority={index < 2}
                     cardIndex={globalIndex}
                     backImage={backImage}
+                    palette={p.palette}
                   />
                 );
               })}

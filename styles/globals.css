@@ -62,18 +62,13 @@ body::before {
   display: flex; align-items: center; justify-content: center;
   padding: 0 8px; position: relative; flex-shrink: 0;
 }
-.navbar-corner::before {
-  content: ''; position: absolute; top: 0; bottom: 0; left: 6px;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
-  pointer-events: none;
-}
 .navbar-name {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900; font-style: italic;
-  color: var(--text); letter-spacing: -0.03em; line-height: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  color: var(--text); letter-spacing: 0.05em; line-height: 1;
   width: 100%; text-align: center; font-size: 11.5px;
   white-space: nowrap; overflow: hidden;
+  text-transform: uppercase;
 }
 .navbar-links {
   flex: 1; display: flex; align-items: stretch; padding: 0 4px;
@@ -105,9 +100,44 @@ body::before {
 }
 .navbar-right a:hover { color: var(--gold); }
 .navbar-right a svg { display: block; }
+.navbar-time {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+  padding: 0 14px;
+  opacity: 0.7;
+}
 .navbar-copy {
   font-size: 8px; color: var(--text-muted);
   letter-spacing: 0.1em; font-style: italic; padding: 0 14px; opacity: 0.5;
+}
+.navbar-center-link {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  color: var(--gold);
+  font-family: 'IM Fell English', serif;
+  font-size: 18px;
+  font-weight: 600;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg2);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.navbar-center-link:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-dim);
+  background: rgba(184, 150, 90, 0.08);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* ── FOCUS STYLES ── */
@@ -145,6 +175,30 @@ body::before {
   font-size: 9px; letter-spacing: 0.35em; text-transform: lowercase;
   color: rgba(212, 197, 169, 0.12);
   white-space: nowrap; pointer-events: none; user-select: none;
+}
+.flip-all-button {
+  position: absolute; top: calc(50vh - var(--nav-h)); left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  background: transparent; border: none;
+  cursor: pointer; padding: 8px;
+  color: var(--text-dim);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.flip-all-button:hover {
+  color: var(--gold);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+.flip-all-button svg {
+  width: 20px; height: 20px;
+  stroke-width: 1.5;
+}
+.flip-all-button span {
+  font-family: 'IM Fell English', serif;
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: lowercase;
+  white-space: nowrap;
 }
 
 /* ── MAIN SCROLLABLE AREA ── */
@@ -226,6 +280,154 @@ body::before {
 .item.flipped .return-hint { opacity: 1; }
 .item.flipped .flip-hint  { opacity: 0; }
 
+/* ══════════════════════════════════════════════════════════════
+   COLOR PALETTE ON CARD BACK
+   ══════════════════════════════════════════════════════════════ */
+
+.color-palette {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 20px;
+  background: rgba(14, 12, 10, 0.85);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+.palette-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.palette-label {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  text-transform: lowercase;
+}
+
+.palette-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.palette-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.palette-item:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: var(--gold-dim);
+  transform: translateX(4px);
+}
+
+.palette-item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.palette-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.palette-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.palette-copied {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 600;
+  animation: fadeInOut 1.5s ease;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-50%) translateX(5px); }
+  20% { opacity: 1; transform: translateY(-50%) translateX(0); }
+  80% { opacity: 1; transform: translateY(-50%) translateX(0); }
+  100% { opacity: 0; transform: translateY(-50%) translateX(-5px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .palette-grid {
+    max-width: 180px;
+  }
+
+  .palette-swatch {
+    width: 32px;
+    height: 32px;
+  }
+
+  .palette-hex {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .color-palette {
+    padding: 20px 16px;
+  }
+
+  .palette-grid {
+    max-width: 160px;
+    gap: 8px;
+  }
+
+  .palette-item {
+    padding: 6px 8px;
+    gap: 10px;
+  }
+
+  .palette-swatch {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 .item:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 4px;
@@ -254,17 +456,32 @@ body::before {
 
 .modal-content {
   position: relative;
-  width: 60%;
-  max-width: 800px;
-  max-height: 80vh;
+  width: 78%;
+  max-width: 1300px;
+  max-height: 85vh;
   background: var(--bg2);
   border: 1px solid var(--border-strong);
   border-radius: 2px;
-  padding: 60px 80px;
+  padding: 60px 40px 40px;
   overflow-y: auto;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 0.3s ease, borderGlow 4s ease-in-out infinite;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(212, 175, 55, 0.3),
+      0 0 40px rgba(212, 175, 55, 0.15),
+      inset 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 35px rgba(212, 175, 55, 0.5),
+      0 0 70px rgba(212, 175, 55, 0.25),
+      inset 0 0 30px rgba(212, 175, 55, 0.15);
+  }
 }
 
 .modal-content::-webkit-scrollbar { width: 3px; }

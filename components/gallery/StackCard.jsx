@@ -54,9 +54,10 @@ export default function StackCard({ image, index, total, isSpread, onClick }) {
           src={image.src}
           alt={image.title}
           fill
-          sizes="(max-width: 768px) 90vw, 300px"
+          sizes="300px"
           style={{ objectFit: 'cover' }}
-          loading="lazy"
+          loading={index > 2 ? "lazy" : undefined}
+          priority={index <= 2}
         />
       </div>
     </div>

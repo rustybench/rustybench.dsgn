@@ -278,7 +278,13 @@ body::before {
 }
 
 .scroll-item:active {
-  opacity: 0.85;
+  opacity: 0.95;
+}
+
+@media (max-width: 640px) {
+  .scroll-item {
+    cursor: default;
+  }
 }
 
 .scroll-item img {
@@ -1170,17 +1176,17 @@ body.fullscreen-active .scroll-to-top {
 @keyframes rippleWave {
   0% {
     transform: scale(1);
-    opacity: 1;
-    border-width: 1.5px;
-  }
-  50% {
-    opacity: 0.6;
+    opacity: 0.4;
     border-width: 1px;
   }
+  50% {
+    opacity: 0.2;
+    border-width: 0.8px;
+  }
   100% {
-    transform: scale(60);
+    transform: scale(35);
     opacity: 0;
-    border-width: 0.5px;
+    border-width: 0.3px;
   }
 }
 
@@ -1713,12 +1719,12 @@ body.fullscreen-active .scroll-to-top {
   }
 
   .masonry-item {
-    cursor: pointer;
+    cursor: default;
     -webkit-tap-highlight-color: transparent;
   }
 
   .masonry-item:active {
-    opacity: 0.85;
+    opacity: 0.95;
   }
 
   .masonry-item img {

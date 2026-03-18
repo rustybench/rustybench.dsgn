@@ -3,7 +3,9 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Card from '../components/Card';
 import AboutModal from '../components/AboutModal';
+import ScrollingArtworks from '../components/ScrollingArtworks';
 import CardStackViewer from '../components/gallery/CardStackViewer';
+import BentoMockups from '../components/gallery/BentoMockups';
 import Footer from '../components/Footer';
 import { pieces } from '../data/pieces';
 
@@ -85,7 +87,9 @@ export default function Home() {
       <div className="layout">
         <Sidebar onFlipAll={handleFlipAll} />
         <main className="main">
-          <div className="masonry">
+          {/* Desktop: Masonry Grid */}
+          <div className="desktop-artworks">
+            <div className="masonry">
             <div className="col" ref={colRefs[0]}>
               {col1.map((p, index) => {
                 const globalIndex = getCardPosition(p.file);
@@ -141,17 +145,30 @@ export default function Home() {
               })}
             </div>
           </div>
+          </div>
 
-          {/* Card Stack Gallery - appears below masonry grid */}
-          {showCardStack ? (
-            <CardStackViewer />
-          ) : (
-            <div
-              ref={stackPlaceholderRef}
-              className="card-stack-placeholder"
-              style={{ minHeight: '100vh' }}
-            />
-          )}
+          {/* Mobile: Bento Mockups Grid (shown first on mobile) */}
+          <div className="mobile-gallery">
+            <BentoMockups />
+          </div>
+
+          {/* Mobile: Scrolling Artworks (shown second on mobile) */}
+          <div className="mobile-artworks">
+            <ScrollingArtworks />
+          </div>
+
+          {/* Desktop: Card Stack Gallery - appears below masonry grid */}
+          <div className="desktop-gallery">
+            {showCardStack ? (
+              <CardStackViewer />
+            ) : (
+              <div
+                ref={stackPlaceholderRef}
+                className="card-stack-placeholder"
+                style={{ minHeight: '100vh' }}
+              />
+            )}
+          </div>
 
           {/* Footer - completes the portfolio */}
           <Footer />

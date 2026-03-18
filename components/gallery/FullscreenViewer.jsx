@@ -7,6 +7,12 @@ export default function FullscreenViewer({
   onNext,
   onPrev,
 }) {
+  // Add body class when fullscreen is active
+  useEffect(() => {
+    document.body.classList.add('fullscreen-active');
+    return () => document.body.classList.remove('fullscreen-active');
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {

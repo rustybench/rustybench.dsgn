@@ -273,6 +273,8 @@ body::before {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.2s;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 .scroll-item:active {
@@ -288,14 +290,16 @@ body::before {
 /* Scroll Right Animation → (slower) */
 .scroll-right .scroll-track {
   animation: scrollRight 120s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes scrollRight {
   from {
-    transform: translateX(-33.333%);
+    transform: translateX(-33.333%) translateZ(0);
   }
   to {
-    transform: translateX(0);
+    transform: translateX(0) translateZ(0);
   }
 }
 
@@ -1698,11 +1702,14 @@ body.fullscreen-active .scroll-to-top {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+    transform: translateZ(0);
   }
 
   .masonry-item.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
+    will-change: auto;
   }
 
   .masonry-item {
@@ -1732,6 +1739,9 @@ body.fullscreen-active .scroll-to-top {
     justify-content: center;
     animation: fadeIn 0.2s ease-out;
     -webkit-tap-highlight-color: transparent;
+    will-change: opacity;
+    transform: translateZ(0);
+    touch-action: pan-x;
   }
 
   .mobile-peek-image {

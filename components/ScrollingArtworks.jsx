@@ -92,7 +92,7 @@ export default function ScrollingArtworks() {
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                   loading={index > 5 ? "lazy" : undefined}
                   priority={index <= 5}
-                  unoptimized
+                  quality={85}
                 />
               </div>
             ))}
@@ -104,8 +104,6 @@ export default function ScrollingArtworks() {
         <div
           className="mobile-peek-overlay peek-artwork"
           onClick={handleCloseFullscreen}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
           <div className="mobile-peek-image">

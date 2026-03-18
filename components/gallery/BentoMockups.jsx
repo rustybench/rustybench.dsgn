@@ -49,8 +49,8 @@ export default function BentoMockups() {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '50px',
+        threshold: 0.05,
+        rootMargin: '100px',
       }
     );
 
@@ -102,6 +102,20 @@ export default function BentoMockups() {
     touchEnd.current = e.targetTouches[0].clientX;
   };
 
+  // Add passive event listeners for better scroll performance
+  useEffect(() => {
+    const overlay = document.querySelector('.mobile-peek-overlay');
+    if (!overlay || fullscreenIndex === null) return;
+
+    overlay.addEventListener('touchstart', handleTouchStart, { passive: true });
+    overlay.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      overlay.removeEventListener('touchstart', handleTouchStart);
+      overlay.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [fullscreenIndex]);
+
   const handleTouchEnd = () => {
     if (!touchStart.current || !touchEnd.current) return;
 
@@ -145,7 +159,6 @@ export default function BentoMockups() {
                 loading={index > 1 ? "lazy" : undefined}
                 priority={index <= 1}
                 quality={85}
-                unoptimized
               />
             </div>
           ))}
@@ -168,7 +181,6 @@ export default function BentoMockups() {
                 loading={index > 1 ? "lazy" : undefined}
                 priority={index <= 1}
                 quality={85}
-                unoptimized
               />
             </div>
           ))}
@@ -179,8 +191,6 @@ export default function BentoMockups() {
         <div
           className="mobile-peek-overlay peek-mockup"
           onClick={handleCloseFullscreen}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
           <div className="mobile-peek-image">

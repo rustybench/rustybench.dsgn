@@ -1,0 +1,93 @@
+<h2>Mobile Bento Grid Layouts</h2>
+<p class="subtitle">Which grid rhythm feels right for your portfolio? (Tap to select)</p>
+
+<div class="options">
+  <div class="option" data-choice="tight" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Tight & Compact</h3>
+      <div class="mockup" style="margin: 12px 0;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 12px; background: #0e0c0a;">
+          <!-- Row 1 -->
+          <div style="background: linear-gradient(135deg, #8B6F47, #D66359); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #D4A82E, #C86B3C); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #3D2418, #6B4423); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <!-- Row 2 -->
+          <div style="background: linear-gradient(135deg, #1A2428, #E8DCC8); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #8B6F47, #1F3940); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #D66359, #E8D4A8); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <!-- Row 3 -->
+          <div style="background: linear-gradient(135deg, #C86B3C, #3D2418); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #6B4423, #D4A82E); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #1F3940, #8B6F47); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <!-- Row 4 -->
+          <div style="background: linear-gradient(135deg, #E8DCC8, #D66359); aspect-ratio: 1/1; grid-column: span 3; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #1A2428, #C86B3C); aspect-ratio: 1/1; border-radius: 2px;"></div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Shows more content above fold</li><li>Dynamic, busy energy</li><li>Modern editorial feel</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less breathing room</li><li>Harder to appreciate individual pieces</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="balanced" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Balanced & Breathable</h3>
+      <div class="mockup" style="margin: 12px 0;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px; background: #0e0c0a;">
+          <!-- Row 1 -->
+          <div style="background: linear-gradient(135deg, #8B6F47, #D66359); aspect-ratio: 1/1; grid-column: span 2; grid-row: span 2; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #D4A82E, #C86B3C); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #3D2418, #6B4423); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <!-- Row 2 (hero in left 2x2) -->
+          <div style="background: linear-gradient(135deg, #1A2428, #E8DCC8); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <!-- Row 3 -->
+          <div style="background: linear-gradient(135deg, #8B6F47, #1F3940); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #D66359, #E8D4A8); aspect-ratio: 1/1; grid-column: span 3; border-radius: 2px;"></div>
+          <!-- Row 4 -->
+          <div style="background: linear-gradient(135deg, #C86B3C, #3D2418); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #6B4423, #D4A82E); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #1F3940, #8B6F47); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Good visual hierarchy</li><li>Pieces have space to breathe</li><li>Mix of hero & detail</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly less dense</li><li>More scrolling required</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="airy" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Airy & Editorial</h3>
+      <div class="mockup" style="margin: 12px 0;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 16px; background: #0e0c0a;">
+          <!-- Row 1 - big hero -->
+          <div style="background: linear-gradient(135deg, #8B6F47, #D66359); aspect-ratio: 3/4; grid-column: span 4; border-radius: 2px;"></div>
+          <!-- Row 2 -->
+          <div style="background: linear-gradient(135deg, #D4A82E, #C86B3C); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #3D2418, #6B4423); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <!-- Row 3 -->
+          <div style="background: linear-gradient(135deg, #1A2428, #E8DCC8); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #8B6F47, #1F3940); aspect-ratio: 1/1; grid-column: span 2; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #D66359, #E8D4A8); aspect-ratio: 1/1; border-radius: 2px;"></div>
+          <!-- Row 4 -->
+          <div style="background: linear-gradient(135deg, #C86B3C, #3D2418); aspect-ratio: 1/1; grid-column: span 3; border-radius: 2px;"></div>
+          <div style="background: linear-gradient(135deg, #6B4423, #D4A82E); aspect-ratio: 1/1; border-radius: 2px;"></div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Magazine-quality feel</li><li>Maximum breathing room</li><li>Hero pieces stand out</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Least dense layout</li><li>Much more scrolling</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 24px; color: var(--text-dim); font-size: 13px;">
+  Note: These use a 4-column grid for variety. Actual implementation would be optimized for mobile width with appropriate gaps and sizes.
+</p>

@@ -49,8 +49,8 @@ export default function BentoMockups() {
         });
       },
       {
-        threshold: 0.01,
-        rootMargin: '200px',
+        threshold: 0.1,
+        rootMargin: '50px',
       }
     );
 
@@ -156,9 +156,12 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading="eager"
+                loading={index < 3 ? "eager" : "lazy"}
+                priority={index < 2}
                 quality={85}
                 sizes="(max-width: 640px) 50vw, 33vw"
+                placeholder="blur"
+                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzExMTAwOSIvPjwvc3ZnPg=="
               />
             </div>
           ))}
@@ -178,9 +181,12 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading="eager"
+                loading={index < 3 ? "eager" : "lazy"}
+                priority={index < 2}
                 quality={85}
                 sizes="(max-width: 640px) 50vw, 33vw"
+                placeholder="blur"
+                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzExMTAwOSIvPjwvc3ZnPg=="
               />
             </div>
           ))}

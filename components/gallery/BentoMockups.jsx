@@ -49,8 +49,8 @@ export default function BentoMockups() {
         });
       },
       {
-        threshold: 0.05,
-        rootMargin: '100px',
+        threshold: 0.01,
+        rootMargin: '200px',
       }
     );
 
@@ -156,9 +156,9 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading={index > 1 ? "lazy" : undefined}
-                priority={index <= 1}
+                loading="eager"
                 quality={85}
+                sizes="(max-width: 640px) 50vw, 33vw"
               />
             </div>
           ))}
@@ -178,9 +178,9 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading={index > 1 ? "lazy" : undefined}
-                priority={index <= 1}
+                loading="eager"
                 quality={85}
+                sizes="(max-width: 640px) 50vw, 33vw"
               />
             </div>
           ))}

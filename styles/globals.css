@@ -1,6 +1,17 @@
 /* ── FONTS & RESETS ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Ensure default cursor on mobile - no custom cursor trail */
+@media (max-width: 640px), (hover: none) and (pointer: coarse) {
+  * {
+    cursor: default !important;
+  }
+
+  button, a, [role="button"], [onclick] {
+    cursor: pointer !important;
+  }
+}
+
 :root {
   --bg:           #0e0c0a;
   --bg2:          #111009;

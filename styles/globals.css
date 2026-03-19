@@ -1140,7 +1140,7 @@ body.fullscreen-active .scroll-to-top {
 
 @media (max-width: 640px) {
   .scroll-to-top {
-    bottom: 140px;
+    bottom: 60px;
     right: 24px;
     left: auto;
     transform: none;

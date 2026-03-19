@@ -156,8 +156,7 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading={index < 3 ? "eager" : "lazy"}
-                priority={index < 2}
+                loading="eager"
                 quality={85}
                 sizes="(max-width: 640px) 50vw, 33vw"
                 placeholder="blur"
@@ -181,8 +180,7 @@ export default function BentoMockups() {
                 width={img.width}
                 height={img.height}
                 style={{ width: '100%', height: 'auto' }}
-                loading={index < 3 ? "eager" : "lazy"}
-                priority={index < 2}
+                loading="eager"
                 quality={85}
                 sizes="(max-width: 640px) 50vw, 33vw"
                 placeholder="blur"

@@ -63,6 +63,20 @@ export default function ScrollingArtworks() {
     }
   };
 
+  // Add passive event listeners for better scroll performance
+  useEffect(() => {
+    const overlay = document.querySelector('.mobile-peek-overlay');
+    if (!overlay || fullscreenIndex === null) return;
+
+    overlay.addEventListener('touchstart', handleTouchStart, { passive: true });
+    overlay.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      overlay.removeEventListener('touchstart', handleTouchStart);
+      overlay.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [fullscreenIndex]);
+
   useEffect(() => {
     return () => {
       if (autoCloseTimer.current) {

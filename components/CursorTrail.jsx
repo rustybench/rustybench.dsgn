@@ -4,6 +4,11 @@ const TRAIL_COUNT = 22;
 
 export default function CursorTrail() {
   useEffect(() => {
+    // Disable cursor trail on mobile/touch devices
+    if ('ontouchstart' in window || window.innerWidth <= 640) {
+      return;
+    }
+
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:998;mix-blend-mode:screen;';
     document.body.appendChild(canvas);

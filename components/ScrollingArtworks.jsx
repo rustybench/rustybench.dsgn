@@ -90,9 +90,11 @@ export default function ScrollingArtworks() {
                   width={400}
                   height={533}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  loading={index > 5 ? "lazy" : undefined}
-                  priority={index <= 5}
+                  loading="eager"
                   quality={85}
+                  sizes="280px"
+                  placeholder="blur"
+                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgZmlsbD0iIzExMTAwOSIvPjwvc3ZnPg=="
                 />
               </div>
             ))}

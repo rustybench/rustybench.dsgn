@@ -109,7 +109,7 @@ export default function BentoMockups() {
 
   // Add passive event listeners for better scroll performance
   useEffect(() => {
-    const overlay = document.querySelector('.mobile-peek-overlay');
+    const overlay = document.querySelector('.peek-mockup');
     if (!overlay || fullscreenIndex === null) return;
 
     overlay.addEventListener('touchstart', handleTouchStart, { passive: true });

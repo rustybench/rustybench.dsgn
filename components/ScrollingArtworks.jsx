@@ -65,7 +65,7 @@ export default function ScrollingArtworks() {
 
   // Add passive event listeners for better scroll performance
   useEffect(() => {
-    const overlay = document.querySelector('.mobile-peek-overlay');
+    const overlay = document.querySelector('.peek-artwork');
     if (!overlay || fullscreenIndex === null) return;
 
     overlay.addEventListener('touchstart', handleTouchStart, { passive: true });

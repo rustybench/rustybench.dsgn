@@ -1859,7 +1859,7 @@ body.fullscreen-active .scroll-to-top {
   /* Mobile navigation arrows */
   .mobile-nav-arrow {
     position: absolute;
-    bottom: 50px;
+    bottom: 80px;
     width: 48px;
     height: 48px;
     background: rgba(14, 12, 10, 0.85);

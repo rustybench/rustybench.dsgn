@@ -1759,11 +1759,9 @@ body.fullscreen-active .scroll-to-top {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: fadeIn 0.2s ease-out;
     -webkit-tap-highlight-color: transparent;
-    will-change: opacity;
     transform: translateZ(0);
-    touch-action: pan-x;
+    touch-action: manipulation;
   }
 
   .mobile-peek-image {
@@ -1775,25 +1773,10 @@ body.fullscreen-active .scroll-to-top {
     justify-content: center;
   }
 
-  /* Mockups: lightweight reveal animation - no blur for better mobile performance */
-  .peek-mockup .mobile-peek-image img {
-    animation: lightReveal 0.3s ease-out forwards;
-  }
-
-  @keyframes lightReveal {
-    0% {
-      opacity: 0;
-      transform: scale(0.97);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  /* Artworks: simple fade-in */
+  /* Mockups and artworks: no animation for instant display */
+  .peek-mockup .mobile-peek-image img,
   .peek-artwork .mobile-peek-image img {
-    animation: simpleFade 0.2s ease-out forwards;
+    opacity: 1;
   }
 
   @keyframes simpleFade {
@@ -1859,7 +1842,7 @@ body.fullscreen-active .scroll-to-top {
   /* Mobile navigation arrows */
   .mobile-nav-arrow {
     position: absolute;
-    bottom: 80px;
+    bottom: 120px;
     width: 48px;
     height: 48px;
     background: rgba(14, 12, 10, 0.85);
@@ -1871,7 +1854,7 @@ body.fullscreen-active .scroll-to-top {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: none;
     z-index: 10;
     -webkit-tap-highlight-color: transparent;
   }

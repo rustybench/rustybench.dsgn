@@ -37,7 +37,7 @@ export default function BentoMockups() {
   const touchStart = useRef(null);
   const touchEnd = useRef(null);
 
-  // Intersection Observer for fade-in effect
+  // Simple fade-in animation on scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -48,10 +48,7 @@ export default function BentoMockups() {
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '50px',
-      }
+      { threshold: 0.1 }
     );
 
     Object.values(itemRefs.current).forEach((ref) => {

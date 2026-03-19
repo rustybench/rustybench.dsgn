@@ -32,6 +32,7 @@ const allImages = [...columnLeft, ...columnRight].sort((a, b) => a.id - b.id);
 export default function BentoMockups() {
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [fullscreenIndex, setFullscreenIndex] = useState(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const itemRefs = useRef({});
   const autoCloseTimer = useRef(null);
   const touchStart = useRef(null);
@@ -67,6 +68,9 @@ export default function BentoMockups() {
   }, []);
 
   const startAutoCloseTimer = () => {
+    // Don't start timer if user has already swiped
+    if (hasInteracted) return;
+
     if (autoCloseTimer.current) {
       clearTimeout(autoCloseTimer.current);
     }
@@ -78,6 +82,7 @@ export default function BentoMockups() {
   const handleImageClick = (img) => {
     const index = allImages.findIndex(i => i.id === img.id);
     setFullscreenIndex(index);
+    setHasInteracted(false); // Reset interaction flag for new image
     startAutoCloseTimer();
   };
 
@@ -89,13 +94,19 @@ export default function BentoMockups() {
   };
 
   const handleNext = () => {
+    setHasInteracted(true); // User swiped, disable timer
+    if (autoCloseTimer.current) {
+      clearTimeout(autoCloseTimer.current);
+    }
     setFullscreenIndex((prev) => (prev + 1) % allImages.length);
-    startAutoCloseTimer();
   };
 
   const handlePrev = () => {
+    setHasInteracted(true); // User swiped, disable timer
+    if (autoCloseTimer.current) {
+      clearTimeout(autoCloseTimer.current);
+    }
     setFullscreenIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-    startAutoCloseTimer();
   };
 
   const handleTouchStart = (e) => {

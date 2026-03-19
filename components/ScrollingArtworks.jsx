@@ -4,11 +4,15 @@ import { pieces } from '../data/pieces';
 
 export default function ScrollingArtworks() {
   const [fullscreenIndex, setFullscreenIndex] = useState(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const autoCloseTimer = useRef(null);
   const touchStart = useRef(null);
   const touchEnd = useRef(null);
 
   const startAutoCloseTimer = () => {
+    // Don't start timer if user has already swiped
+    if (hasInteracted) return;
+
     if (autoCloseTimer.current) {
       clearTimeout(autoCloseTimer.current);
     }
@@ -20,6 +24,7 @@ export default function ScrollingArtworks() {
   const handleImageClick = (piece) => {
     const index = pieces.findIndex(p => p.file === piece.file);
     setFullscreenIndex(index);
+    setHasInteracted(false); // Reset interaction flag for new image
     startAutoCloseTimer();
   };
 
@@ -31,13 +36,19 @@ export default function ScrollingArtworks() {
   };
 
   const handleNext = () => {
+    setHasInteracted(true); // User swiped, disable timer
+    if (autoCloseTimer.current) {
+      clearTimeout(autoCloseTimer.current);
+    }
     setFullscreenIndex((prev) => (prev + 1) % pieces.length);
-    startAutoCloseTimer();
   };
 
   const handlePrev = () => {
+    setHasInteracted(true); // User swiped, disable timer
+    if (autoCloseTimer.current) {
+      clearTimeout(autoCloseTimer.current);
+    }
     setFullscreenIndex((prev) => (prev === 0 ? pieces.length - 1 : prev - 1));
-    startAutoCloseTimer();
   };
 
   const handleTouchStart = (e) => {

@@ -1869,7 +1869,8 @@ body.fullscreen-active .scroll-to-top {
     border-radius: 50%;
     pointer-events: none;
     opacity: 0;
-    animation: swipeHint 2.5s ease-out forwards;
+    animation: swipeHint 2.5s ease-out 0s forwards;
+    will-change: opacity, transform;
   }
 
   .mobile-peek-overlay::before {

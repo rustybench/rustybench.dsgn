@@ -302,7 +302,7 @@ body::before {
 
 @keyframes scrollRight {
   from {
-    transform: translateX(-33.333%) translateZ(0);
+    transform: translateX(-50%) translateZ(0);
   }
   to {
     transform: translateX(0) translateZ(0);

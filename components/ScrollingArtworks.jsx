@@ -77,8 +77,8 @@ export default function ScrollingArtworks() {
         {/* All 15 artworks in one row scrolling right */}
         <div className="scroll-row scroll-right">
           <div className="scroll-track">
-            {/* Duplicate all pieces for infinite scroll */}
-            {[...pieces, ...pieces, ...pieces].map((piece, index) => (
+            {/* Duplicate pieces twice for infinite scroll (reduced for performance) */}
+            {[...pieces, ...pieces].map((piece, index) => (
               <div
                 key={`artwork-${index}`}
                 className="scroll-item"

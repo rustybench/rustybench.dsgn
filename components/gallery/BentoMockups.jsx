@@ -37,8 +37,16 @@ export default function BentoMockups() {
   const touchStart = useRef(null);
   const touchEnd = useRef(null);
 
-  // Simple fade-in animation on scroll
+  // Simple fade-in animation on scroll (desktop only for performance)
   useEffect(() => {
+    // Skip animations on mobile for better performance
+    if (window.innerWidth <= 640) {
+      // Mark all items as visible immediately on mobile
+      const allIds = [...columnLeft, ...columnRight].map(img => String(img.id));
+      setVisibleItems(new Set(allIds));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

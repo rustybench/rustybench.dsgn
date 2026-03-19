@@ -109,42 +109,6 @@ export default function BentoMockups() {
     setFullscreenIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
   };
 
-  const handleTouchStart = (e) => {
-    touchEnd.current = null;
-    touchStart.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEnd.current = e.targetTouches[0].clientX;
-  };
-
-  // Add passive event listeners for better scroll performance
-  useEffect(() => {
-    const overlay = document.querySelector('.peek-mockup');
-    if (!overlay || fullscreenIndex === null) return;
-
-    overlay.addEventListener('touchstart', handleTouchStart, { passive: true });
-    overlay.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-    return () => {
-      overlay.removeEventListener('touchstart', handleTouchStart);
-      overlay.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [fullscreenIndex]);
-
-  const handleTouchEnd = () => {
-    if (!touchStart.current || !touchEnd.current) return;
-
-    const distance = touchStart.current - touchEnd.current;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      handleNext();
-    } else if (isRightSwipe) {
-      handlePrev();
-    }
-  };
 
   useEffect(() => {
     return () => {
@@ -211,7 +175,6 @@ export default function BentoMockups() {
         <div
           className="mobile-peek-overlay peek-mockup"
           onClick={handleCloseFullscreen}
-          onTouchEnd={handleTouchEnd}
         >
           <div className="mobile-peek-image">
             <img
@@ -224,6 +187,28 @@ export default function BentoMockups() {
             {String(fullscreenIndex + 1).padStart(2, '0')} / {String(allImages.length).padStart(2, '0')}
           </div>
           <div className="mobile-peek-timer" />
+
+          {/* Navigation arrows */}
+          <button
+            className="mobile-nav-arrow mobile-nav-left"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrev();
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            className="mobile-nav-arrow mobile-nav-right"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
         </div>
       )}
     </>

@@ -51,42 +51,6 @@ export default function ScrollingArtworks() {
     setFullscreenIndex((prev) => (prev === 0 ? pieces.length - 1 : prev - 1));
   };
 
-  const handleTouchStart = (e) => {
-    touchEnd.current = null;
-    touchStart.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEnd.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart.current || !touchEnd.current) return;
-
-    const distance = touchStart.current - touchEnd.current;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      handleNext();
-    } else if (isRightSwipe) {
-      handlePrev();
-    }
-  };
-
-  // Add passive event listeners for better scroll performance
-  useEffect(() => {
-    const overlay = document.querySelector('.peek-artwork');
-    if (!overlay || fullscreenIndex === null) return;
-
-    overlay.addEventListener('touchstart', handleTouchStart, { passive: true });
-    overlay.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-    return () => {
-      overlay.removeEventListener('touchstart', handleTouchStart);
-      overlay.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [fullscreenIndex]);
 
   useEffect(() => {
     return () => {
@@ -131,7 +95,6 @@ export default function ScrollingArtworks() {
         <div
           className="mobile-peek-overlay peek-artwork"
           onClick={handleCloseFullscreen}
-          onTouchEnd={handleTouchEnd}
         >
           <div className="mobile-peek-image">
             <img
@@ -144,6 +107,28 @@ export default function ScrollingArtworks() {
             {String(fullscreenIndex + 1).padStart(2, '0')} / {String(pieces.length).padStart(2, '0')}
           </div>
           <div className="mobile-peek-timer" />
+
+          {/* Navigation arrows */}
+          <button
+            className="mobile-nav-arrow mobile-nav-left"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrev();
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            className="mobile-nav-arrow mobile-nav-right"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
         </div>
       )}
     </>

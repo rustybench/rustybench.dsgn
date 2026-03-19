@@ -65,15 +65,15 @@ export default function ScrollingArtworks() {
 
   // Add passive event listeners for better scroll performance
   useEffect(() => {
-    const backdrop = document.querySelector('.artwork-backdrop');
-    if (!backdrop || fullscreenIndex === null) return;
+    const overlay = document.querySelector('.mobile-peek-overlay');
+    if (!overlay || fullscreenIndex === null) return;
 
-    backdrop.addEventListener('touchstart', handleTouchStart, { passive: true });
-    backdrop.addEventListener('touchmove', handleTouchMove, { passive: true });
+    overlay.addEventListener('touchstart', handleTouchStart, { passive: true });
+    overlay.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     return () => {
-      backdrop.removeEventListener('touchstart', handleTouchStart);
-      backdrop.removeEventListener('touchmove', handleTouchMove);
+      overlay.removeEventListener('touchstart', handleTouchStart);
+      overlay.removeEventListener('touchmove', handleTouchMove);
     };
   }, [fullscreenIndex]);
 
@@ -87,7 +87,7 @@ export default function ScrollingArtworks() {
 
   return (
     <>
-      <div className={`scrolling-artworks-container ${fullscreenIndex !== null ? 'paused' : ''}`}>
+      <div className="scrolling-artworks-container">
         {/* All 15 artworks in one row scrolling right */}
         <div className="scroll-row scroll-right">
           <div className="scroll-track">
@@ -95,7 +95,7 @@ export default function ScrollingArtworks() {
             {[...pieces, ...pieces].map((piece, index) => (
               <div
                 key={`artwork-${index}`}
-                className={`scroll-item ${fullscreenIndex !== null && pieces[fullscreenIndex].file === piece.file ? 'centered' : ''}`}
+                className="scroll-item"
                 onClick={() => handleImageClick(piece)}
               >
                 <Image
@@ -110,26 +110,31 @@ export default function ScrollingArtworks() {
                   placeholder="blur"
                   blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgZmlsbD0iIzExMTAwOSIvPjwvc3ZnPg=="
                 />
-                {fullscreenIndex !== null && pieces[fullscreenIndex].file === piece.file && (
-                  <>
-                    <div className="artwork-counter">
-                      {String(fullscreenIndex + 1).padStart(2, '0')} / {String(pieces.length).padStart(2, '0')}
-                    </div>
-                    <div className="artwork-timer" />
-                  </>
-                )}
               </div>
             ))}
           </div>
         </div>
-        {fullscreenIndex !== null && (
-          <div
-            className="artwork-backdrop"
-            onClick={handleCloseFullscreen}
-            onTouchEnd={handleTouchEnd}
-          />
-        )}
       </div>
+
+      {fullscreenIndex !== null && (
+        <div
+          className="mobile-peek-overlay peek-artwork"
+          onClick={handleCloseFullscreen}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="mobile-peek-image">
+            <img
+              src={`/images/${pieces[fullscreenIndex].file}`}
+              alt={pieces[fullscreenIndex].title}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+          </div>
+          <div className="mobile-peek-counter">
+            {String(fullscreenIndex + 1).padStart(2, '0')} / {String(pieces.length).padStart(2, '0')}
+          </div>
+          <div className="mobile-peek-timer" />
+        </div>
+      )}
     </>
   );
 }
